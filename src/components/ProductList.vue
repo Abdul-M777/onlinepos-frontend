@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import draggable from "vuedraggable";
-import ProductForm from "./ProductForm.vue";
+import ProductForm from "./modals/ProductForm.vue";
 
 interface Product {
   id: number;
@@ -62,45 +62,57 @@ onMounted(fetchProducts);
       </button>
     </div>
 
-    <div class="relative overflow-x-auto rounded shadow-2xl px-2">
-      <div class="p-3 text-gray-600">Alle produkter(3)</div>
+    <div class="relative overflow-x-auto rounded shadow-2xl px-2 bg-gray-50">
+      <div class="p-3 text-gray-500">Alle produkter(3)</div>
       <table class="text-sm text-left rtl:text-right text-gray-500 w-full">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-          <tr>
+          <tr class="bg-white border-b border-gray-200">
             <th scope="col" class=""></th>
-            <th scope="col" class="py-3">Product name</th>
-            <th scope="col" class="py-3">Color</th>
-            <th scope="col" class="py-3">Category</th>
-            <th scope="col" class="py-3">Price</th>
+            <th scope="col" class="py-3">Produkt ID</th>
+            <th scope="col" class="py-3">Navn</th>
+            <th scope="col" class="py-3">Beskrivelse</th>
+            <th scope="col" class="py-3">Pris</th>
+            <th scope="col" class="py-3">Momstats</th>
+            <th scope="col" class="py-3">Tag</th>
+            <th scope="col" class=""></th>
           </tr>
         </thead>
         <tbody>
           <tr class="bg-white border-b border-gray-200">
-            <td class="py-4 px-6"><i class="pi pi-align-justify"></i></td>
-            <td scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap">
+            <td class="py-4 px-4"><i class="pi pi-align-justify"></i></td>
+            <td scope="row" class="px-4 py-4 text-gray-900 whitespace-nowrap">
               Apple MacBook Pro 17"
             </td>
-            <td class="px-6 py-4">Silver</td>
-            <td class="px-6 py-4">Laptop</td>
-            <td class="px-6 py-4">$2999</td>
+            <td class="px-4 py-4">Silver</td>
+            <td class="px-4 py-4">Laptop</td>
+            <td class="px-4 py-4">$2999</td>
+            <td class="px-4 py-4">Laptop</td>
+            <td class="px-4 py-4">$2999</td>
+            <td class="py-4 px-4"><i class="pi pi-angle-right"></i></td>
           </tr>
           <tr class="bg-white border-b border-gray-200">
-            <td class="py-4 px-6"><i class="pi pi-align-justify"></i></td>
-            <td scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap">
+            <td class="py-4 px-4"><i class="pi pi-align-justify"></i></td>
+            <td scope="row" class="px-4 py-4 text-gray-900 whitespace-nowrap">
               Microsoft Surface Pro
             </td>
-            <td class="px-6 py-4">White</td>
-            <td class="px-6 py-4">Laptop PC</td>
-            <td class="px-6 py-4">$1999</td>
+            <td class="px-4 py-4">White</td>
+            <td class="px-4 py-4">Laptop PC</td>
+            <td class="px-4 py-4">$1999</td>
+            <td class="px-4 py-4">Laptop</td>
+            <td class="px-4 py-4">$2999</td>
+            <td class="py-4 px-4"><i class="pi pi-angle-right"></i></td>
           </tr>
           <tr class="bg-white">
-            <td class="py-4 px-6"><i class="pi pi-align-justify"></i></td>
-            <td scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap">
+            <td class="py-4 px-4"><i class="pi pi-align-justify"></i></td>
+            <td scope="row" class="px-4 py-4 text-gray-900 whitespace-nowrap">
               Magic Mouse 2
             </td>
-            <td class="px-6 py-4">Black</td>
-            <td class="px-6 py-4">Accessories</td>
-            <td class="px-6 py-4">$99</td>
+            <td class="px-4 py-4">Black</td>
+            <td class="px-4 py-4">Accessories</td>
+            <td class="px-4 py-4">$99</td>
+            <td class="px-4 py-4">Laptop</td>
+            <td class="px-4 py-4">$2999</td>
+            <td class="py-4 px-4"><i class="pi pi-angle-right"></i></td>
           </tr>
         </tbody>
       </table>
