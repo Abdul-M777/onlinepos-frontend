@@ -3,7 +3,8 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import draggable from "vuedraggable";
 import ProductForm from "./modals/ProductForm.vue";
-import { getColor } from "../utils/ColorMap";
+import { getColor, getDarkerColor } from "../utils/colorMap";
+import { formatPrice } from "../utils/format";
 
 interface Product {
   id: number;
@@ -65,21 +66,21 @@ onMounted(fetchProducts);
 
     <div class="relative overflow-x-auto rounded-lg shadow-lg bg-white">
       <!-- Header -->
-      <div class="p-4 text-gray-700 font-semibold border-b bg-gray-100">
+      <div class="p-4 text-gray-700 font-semibold">
         Alle produkter ({{ products.length }})
       </div>
 
       <!-- Table -->
       <table class="w-full text-sm text-gray-700">
-        <thead class="text-xs font-bold uppercase bg-gray-200">
+        <thead class="text-xs font-bold uppercase">
           <tr>
             <th class="w-10 px-4 py-3"></th>
-            <th class="px-4 py-3">Produkt ID</th>
-            <th class="px-4 py-3">Navn</th>
-            <th class="px-4 py-3">Beskrivelse</th>
-            <th class="px-4 py-3">Pris (DKK)</th>
-            <th class="px-4 py-3">Momstats</th>
-            <th class="px-4 py-3">Tag</th>
+            <th class="px-4 py-3 text-left">Produkt ID</th>
+            <th class="px-4 py-3 text-left">Navn</th>
+            <th class="px-4 py-3 text-left">Beskrivelse</th>
+            <th class="px-4 py-3 text-left">Pris</th>
+            <th class="px-4 py-3 text-left">Momstats</th>
+            <th class="px-4 py-3 text-left">Tag</th>
             <th class="w-10 px-4 py-3"></th>
           </tr>
         </thead>
@@ -106,21 +107,31 @@ onMounted(fetchProducts);
               <td class="px-4 py-4 truncate max-w-xs">
                 {{ element.description }}
               </td>
-              <td class="px-4 py-4 font-semibold text-green-600">
-                {{ element.price }} DKK
+              <td class="px-4 py-4 text-right">
+                {{ formatPrice(element.price) }}
               </td>
-              <td class="px-4 py-4">{{ element.vat }}%</td>
+              <td class="px-4 py-4">{{ element.vat }} %</td>
               <td class="px-4 py-4">
                 <span
-                  class="px-2 py-1 rounded-full text-xs text-white"
-                  :style="{ backgroundColor: getColor(element.tag_color) }"
+                  class="px-2 py-1 rounded-full text-xs text-white font-semibold"
+                  :style="{
+                    backgroundColor: element.tag_name
+                      ? getColor(element.tag_color)
+                      : 'transparent',
+                    color: element.tag_name
+                      ? getDarkerColor(getColor(element.tag_color))
+                      : 'transparent',
+                  }"
                 >
                   {{ element.tag_name }}
                 </span>
               </td>
 
               <td class="px-4 py-4 text-right">
-                <button @click="openModal(element)" class="">
+                <button
+                  @click="openModal(element)"
+                  class=":hover:bg-gray-200 cursor-pointer"
+                >
                   <i class="pi pi-angle-right"></i>
                 </button>
               </td>
