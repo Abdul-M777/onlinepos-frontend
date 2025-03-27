@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import draggable from "vuedraggable";
 import ProductForm from "./modals/ProductForm.vue";
+import { getColor } from "../utils/ColorMap";
 
 interface Product {
   id: number;
@@ -62,80 +63,72 @@ onMounted(fetchProducts);
       </button>
     </div>
 
-    <div class="relative overflow-x-auto rounded shadow-2xl px-2 bg-gray-50">
-      <div class="p-3 text-gray-500">Alle produkter(3)</div>
-      <table class="text-sm text-left rtl:text-right text-gray-500 w-full">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-          <tr class="bg-white border-b border-gray-200">
-            <th scope="col" class=""></th>
-            <th scope="col" class="py-3">Produkt ID</th>
-            <th scope="col" class="py-3">Navn</th>
-            <th scope="col" class="py-3">Beskrivelse</th>
-            <th scope="col" class="py-3">Pris</th>
-            <th scope="col" class="py-3">Momstats</th>
-            <th scope="col" class="py-3">Tag</th>
-            <th scope="col" class=""></th>
+    <div class="relative overflow-x-auto rounded-lg shadow-lg bg-white">
+      <!-- Header -->
+      <div class="p-4 text-gray-700 font-semibold border-b bg-gray-100">
+        Alle produkter ({{ products.length }})
+      </div>
+
+      <!-- Table -->
+      <table class="w-full text-sm text-gray-700">
+        <thead class="text-xs font-bold uppercase bg-gray-200">
+          <tr>
+            <th class="w-10 px-4 py-3"></th>
+            <th class="px-4 py-3">Produkt ID</th>
+            <th class="px-4 py-3">Navn</th>
+            <th class="px-4 py-3">Beskrivelse</th>
+            <th class="px-4 py-3">Pris (DKK)</th>
+            <th class="px-4 py-3">Momstats</th>
+            <th class="px-4 py-3">Tag</th>
+            <th class="w-10 px-4 py-3"></th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="bg-white border-b border-gray-200">
-            <td class="py-4 px-4"><i class="pi pi-align-justify"></i></td>
-            <td scope="row" class="px-4 py-4 text-gray-900 whitespace-nowrap">
-              Apple MacBook Pro 17"
-            </td>
-            <td class="px-4 py-4">Silver</td>
-            <td class="px-4 py-4">Laptop</td>
-            <td class="px-4 py-4">$2999</td>
-            <td class="px-4 py-4">Laptop</td>
-            <td class="px-4 py-4">$2999</td>
-            <td class="py-4 px-4"><i class="pi pi-angle-right"></i></td>
-          </tr>
-          <tr class="bg-white border-b border-gray-200">
-            <td class="py-4 px-4"><i class="pi pi-align-justify"></i></td>
-            <td scope="row" class="px-4 py-4 text-gray-900 whitespace-nowrap">
-              Microsoft Surface Pro
-            </td>
-            <td class="px-4 py-4">White</td>
-            <td class="px-4 py-4">Laptop PC</td>
-            <td class="px-4 py-4">$1999</td>
-            <td class="px-4 py-4">Laptop</td>
-            <td class="px-4 py-4">$2999</td>
-            <td class="py-4 px-4"><i class="pi pi-angle-right"></i></td>
-          </tr>
-          <tr class="bg-white">
-            <td class="py-4 px-4"><i class="pi pi-align-justify"></i></td>
-            <td scope="row" class="px-4 py-4 text-gray-900 whitespace-nowrap">
-              Magic Mouse 2
-            </td>
-            <td class="px-4 py-4">Black</td>
-            <td class="px-4 py-4">Accessories</td>
-            <td class="px-4 py-4">$99</td>
-            <td class="px-4 py-4">Laptop</td>
-            <td class="px-4 py-4">$2999</td>
-            <td class="py-4 px-4"><i class="pi pi-angle-right"></i></td>
-          </tr>
-        </tbody>
+
+        <draggable
+          tag="tbody"
+          v-model="products"
+          @end="updateSortOrder"
+          item-key="id"
+        >
+          <template #item="{ element }">
+            <tr
+              class="border-b border-gray-200 odd:bg-gray-50 hover:bg-gray-100 transition"
+            >
+              <!-- Drag handle -->
+              <td class="px-4 py-4 text-gray-500 cursor-move">
+                <i class="pi pi-align-justify"></i>
+              </td>
+
+              <td class="px-4 py-4 font-medium text-gray-900">
+                {{ element.id }}
+              </td>
+              <td class="px-4 py-4">{{ element.name }}</td>
+              <td class="px-4 py-4 truncate max-w-xs">
+                {{ element.description }}
+              </td>
+              <td class="px-4 py-4 font-semibold text-green-600">
+                {{ element.price }} DKK
+              </td>
+              <td class="px-4 py-4">{{ element.vat }}%</td>
+              <td class="px-4 py-4">
+                <span
+                  class="px-2 py-1 rounded-full text-xs text-white"
+                  :style="{ backgroundColor: getColor(element.tag_color) }"
+                >
+                  {{ element.tag_name }}
+                </span>
+              </td>
+
+              <td class="px-4 py-4 text-right">
+                <button @click="openModal(element)" class="">
+                  <i class="pi pi-angle-right"></i>
+                </button>
+              </td>
+            </tr>
+          </template>
+        </draggable>
       </table>
     </div>
-
-    <draggable v-model="products" @end="updateSortOrder" item-key="id">
-      <template #item="{ element }">
-        <div class="flex justify-between items-center p-4 border rounded mb-2">
-          <span>{{ element.name }} - {{ element.price }} DKK</span>
-          <div>
-            <button @click="openModal(element)" class="text-blue-500">
-              Edit
-            </button>
-            <button
-              @click="deleteProduct(element.id)"
-              class="text-red-500 ml-4"
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </template>
-    </draggable>
 
     <ProductForm
       v-if="showModal"
