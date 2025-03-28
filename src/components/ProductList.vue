@@ -74,7 +74,7 @@ onMounted(fetchProducts);
       <div class="flex-1 overflow-y-auto">
         <table class="w-full text-sm text-gray-700 h-full">
           <thead
-            class="text-xs font-bold uppercase bg-white shadow sticky top-0 z-10"
+            class="text-xs font-bold uppercase bg-white shadow sticky top-0 z-0"
           >
             <tr>
               <th class="w-10 px-4 py-3"></th>
