@@ -40,31 +40,32 @@ onMounted(fetchProducts);
       </button>
     </div>
 
-    <div
-      class="relative overflow-x-auto rounded-lg shadow-lg bg-white h-[900px] flex flex-col"
-    >
-      <div class="p-4 text-gray-700 font-semibold">
-        Alle produkter ({{ products.length }})
-      </div>
-
-      <div class="flex-1 overflow-y-auto">
-        <table class="w-full text-sm text-gray-700 h-full">
+    <div class="p-4 text-gray-700 font-semibold bg-white">
+      Alle produkter ({{ products.length }})
+    </div>
+    <div class="flex flex-col bg-white">
+      <div class="flex-grow">
+        <table class="relative w-full">
           <thead
             class="text-xs font-bold uppercase bg-white shadow sticky top-0 z-0"
           >
             <tr>
-              <th class="w-10 px-4 py-3"></th>
-              <th class="px-4 py-3 text-left hidden sm:table-cell">
+              <th class="sticky top-0 w-10 px-4 py-3"></th>
+              <th class="sticky top-0 px-4 py-3 text-left hidden sm:table-cell">
                 Produkt ID
               </th>
-              <th class="px-4 py-3 text-left">Navn</th>
-              <th class="px-4 py-3 text-left hidden sm:table-cell">
+              <th class="sticky top-0 px-4 py-3 text-left">Navn</th>
+              <th class="sticky top-0 px-4 py-3 text-left hidden sm:table-cell">
                 Beskrivelse
               </th>
-              <th class="px-4 py-3 text-left">Pris</th>
-              <th class="px-4 py-3 text-left hidden sm:table-cell">Momstats</th>
-              <th class="px-4 py-3 text-left hidden sm:table-cell">Tag</th>
-              <th class="w-10 px-4 py-3"></th>
+              <th class="sticky top-0 px-4 py-3 text-left">Pris</th>
+              <th class="sticky top-0 px-4 py-3 text-left hidden sm:table-cell">
+                Momstats
+              </th>
+              <th class="sticky top-0 px-4 py-3 text-left hidden sm:table-cell">
+                Tag
+              </th>
+              <th class="sticky top-0 w-10 px-4 py-3"></th>
             </tr>
           </thead>
 

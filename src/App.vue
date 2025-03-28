@@ -4,6 +4,6 @@ import ProductList from "./components/ProductList.vue";
 import Testing from "./components/Testing.vue";
 </script>
 
-<template class="bg-gray-100">
+<template class="">
   <ProductList />
 </template>
