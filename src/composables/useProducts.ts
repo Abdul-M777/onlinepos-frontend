@@ -29,9 +29,10 @@ export function useProducts() {
   const deleteProduct = async (id: number) => {
     try {
       await axios.delete(`${API_URL}/${id}`);
-      fetchProducts();
+      return true;
     } catch (error) {
       console.error("Error deleting product:", error);
+      return false;
     }
   };
 

@@ -69,6 +69,14 @@ const handleSave = async () => {
     closeModal();
   }
 };
+
+const handleDelete = async () => {
+  const success = await deleteProduct(props.product.id);
+  if (success) {
+    emit("refresh");
+    closeModal();
+  }
+};
 </script>
 
 <template>
@@ -144,7 +152,7 @@ const handleSave = async () => {
         <div class="flex justify-between gap-2 mt-4">
           <button
             v-if="props.product?.id"
-            @click="deleteProduct(props.product.id)"
+            @click="handleDelete()"
             class="bg-red-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-600 transition duration-200"
           >
             Slet
