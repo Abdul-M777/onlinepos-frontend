@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, watch, computed } from "vue";
-import axios from "axios";
+import { ref, defineProps, defineEmits, watch, computed, nextTick } from "vue";
 import { useMotion } from "@vueuse/motion";
 import { useProducts } from "../../composables/useProducts";
 
@@ -8,6 +7,16 @@ const props = defineProps<{ product: any }>();
 const emit = defineEmits(["close", "refresh"]);
 
 const { product, saveProduct, deleteProduct } = useProducts();
+
+const inputRef = ref(null);
+
+const focusInput = () => {
+  nextTick(() => {
+    inputRef.value?.focus();
+  });
+};
+
+defineExpose({ focusInput });
 
 watch(
   () => props.product,
@@ -94,6 +103,7 @@ const handleSave = async () => {
           class="p-2 border border-gray-400 rounded outline-none focus:ring focus:ring-green-500"
           name="name"
           id="name"
+          ref="inputRef"
         />
         <label for="description">Beskrivelse</label>
         <textarea

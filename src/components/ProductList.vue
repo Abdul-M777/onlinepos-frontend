@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import axios from "axios";
 import draggable from "vuedraggable";
 import ProductForm from "./modals/ProductForm.vue";
 import { getColor, getDarkerColor } from "../utils/colorMap";
@@ -13,14 +12,17 @@ interface Product {
   price: number;
 }
 
-// const products = ref<Product[]>([]);
 const showModal = ref<boolean>(false);
 const selectedProduct = ref<Product | null>(null);
 const { products, fetchProducts, updateSortOrder } = useProducts();
+const modalRef = ref(null);
 
 const openModal = (product: Product | null = null) => {
   selectedProduct.value = product;
   showModal.value = true;
+  setTimeout(() => {
+    modalRef.value?.focusInput();
+  }, 10); // Wait for DOM
 };
 
 onMounted(fetchProducts);
@@ -132,6 +134,7 @@ onMounted(fetchProducts);
       :product="selectedProduct"
       @close="showModal = false"
       @refresh="fetchProducts"
+      ref="modalRef"
     />
   </div>
 </template>
