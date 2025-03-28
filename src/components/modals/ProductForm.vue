@@ -2,20 +2,12 @@
 import { ref, defineProps, defineEmits, watch, computed } from "vue";
 import axios from "axios";
 import { useMotion } from "@vueuse/motion";
+import { useProducts } from "../../composables/useProducts";
 
 const props = defineProps<{ product: any }>();
 const emit = defineEmits(["close", "refresh"]);
 
-const API_URL = "http://localhost:8000/api/products";
-
-const product = ref({
-  name: "",
-  description: "",
-  price: 0,
-  vat: 25,
-  tag_name: "",
-  tag_color: "",
-});
+const { product, saveProduct, deleteProduct } = useProducts();
 
 watch(
   () => props.product,
@@ -42,17 +34,6 @@ const isFormValid = computed(() => {
   );
 });
 
-const saveProduct = async () => {
-  if (props.product?.id) {
-    await axios.put(`${API_URL}/${props.product.id}`, product.value);
-  } else {
-    await axios.post(API_URL, product.value);
-  }
-  emit("refresh");
-  // emit("close");
-  closeModal();
-};
-
 const isVisible = ref(true);
 
 const modalRef = ref(null);
@@ -64,7 +45,16 @@ useMotion(modalRef, {
 
 const closeModal = () => {
   isVisible.value = false;
-  setTimeout(() => emit("close"), 200);
+  setTimeout(() => emit("close"));
+};
+
+const handleSave = async () => {
+  const success = await saveProduct();
+  console.log("success", success);
+  if (success) {
+    emit("refresh");
+    closeModal();
+  }
 };
 </script>
 
@@ -83,7 +73,7 @@ const closeModal = () => {
         <button
           type="button"
           class="text-gray-400 hover:text-gray-600"
-          @click="emit('close')"
+          @click="closeModal()"
         >
           <svg class="w-4 h-4" fill="none" viewBox="0 0 14 14">
             <path
@@ -140,7 +130,8 @@ const closeModal = () => {
         <div class="flex justify-between gap-2 mt-4">
           <button
             v-if="props.product?.id"
-            class="bg-red-500 text-white px-4 py-2 rounded"
+            @click="deleteProduct(props.product.id)"
+            class="bg-red-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-600 transition duration-200"
           >
             Slet
           </button>
@@ -148,16 +139,16 @@ const closeModal = () => {
           <div class="flex gap-2 ml-auto">
             <button
               @click="closeModal()"
-              class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition duration-200"
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition duration-200 cursor-pointer"
             >
               Annuller
             </button>
             <button
-              @click="saveProduct"
+              @click="handleSave()"
               :disabled="!isFormValid"
               :class="
                 isFormValid
-                  ? 'bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200'
+                  ? 'bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200 cursor-pointer'
                   : 'bg-green-200 text-white px-4 py-2 rounded cursor-not-allowed'
               "
             >

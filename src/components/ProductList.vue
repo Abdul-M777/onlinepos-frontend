@@ -5,6 +5,7 @@ import draggable from "vuedraggable";
 import ProductForm from "./modals/ProductForm.vue";
 import { getColor, getDarkerColor } from "../utils/colorMap";
 import { formatPrice } from "../utils/format";
+import { useProducts } from "../composables/useProducts";
 
 interface Product {
   id: number;
@@ -12,37 +13,10 @@ interface Product {
   price: number;
 }
 
-const products = ref<Product[]>([]);
+// const products = ref<Product[]>([]);
 const showModal = ref<boolean>(false);
 const selectedProduct = ref<Product | null>(null);
-
-const API_URL = "http://localhost:8000/api/products";
-
-const fetchProducts = async () => {
-  try {
-    const response = await axios.get<Product[]>(API_URL);
-    products.value = response.data;
-  } catch (error) {
-    console.error("Error fetching products:", error);
-  }
-};
-
-const deleteProduct = async (id: number) => {
-  try {
-    await axios.delete(`${API_URL}/${id}`);
-    fetchProducts();
-  } catch (error) {
-    console.error("Error deleting product:", error);
-  }
-};
-
-const updateSortOrder = async () => {
-  try {
-    await axios.post(`${API_URL}/sort`, { products: products.value });
-  } catch (error) {
-    console.error("Error updating sort order:", error);
-  }
-};
+const { products, fetchProducts, updateSortOrder } = useProducts();
 
 const openModal = (product: Product | null = null) => {
   selectedProduct.value = product;
