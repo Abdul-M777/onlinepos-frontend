@@ -8,7 +8,7 @@ const emit = defineEmits(["close", "refresh"]);
 
 const { product, saveProduct, deleteProduct } = useProducts();
 
-const inputRef = ref(null);
+const inputRef = ref<HTMLInputElement | null>(null);
 
 const focusInput = () => {
   nextTick(() => {
@@ -37,9 +37,9 @@ watch(
 
 const isFormValid = computed(() => {
   return (
-    product.value.name.trim() !== "" &&
-    product.value.price > 0 &&
-    product.value.vat > 0
+    product.value?.name?.trim() !== "" &&
+    product.value?.price > 0 &&
+    product.value?.vat > 0
   );
 });
 

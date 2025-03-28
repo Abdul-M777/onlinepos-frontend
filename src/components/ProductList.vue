@@ -15,7 +15,7 @@ interface Product {
 const showModal = ref<boolean>(false);
 const selectedProduct = ref<Product | null>(null);
 const { products, fetchProducts, updateSortOrder } = useProducts();
-const modalRef = ref(null);
+const modalRef = ref<{ focusInput: () => void } | null>(null);
 
 const openModal = (product: Product | null = null) => {
   selectedProduct.value = product;
@@ -104,10 +104,12 @@ onMounted(fetchProducts);
                     class="px-2 py-1 rounded-full text-xs text-white font-semibold"
                     :style="{
                       backgroundColor: element.tag_name
-                        ? getColor(element.tag_color)
+                        ? getColor(element.tag_color) || 'transparent'
                         : 'transparent',
                       color: element.tag_name
-                        ? getDarkerColor(getColor(element.tag_color))
+                        ? getDarkerColor(
+                            getColor(element.tag_color) || 'transparent'
+                          )
                         : 'transparent',
                     }"
                   >

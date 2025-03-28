@@ -9,7 +9,7 @@ export const colorMap: Record<string, string> = {
 
 export const getColor = (tagColor: string | null): string | null => {
   const defaultColor = "#808080";
-  return colorMap[tagColor?.toLowerCase()] || defaultColor;
+  return colorMap[tagColor?.toLowerCase() || "defaultColor"] || defaultColor;
 };
 
 // Function to darken a hex color for text
