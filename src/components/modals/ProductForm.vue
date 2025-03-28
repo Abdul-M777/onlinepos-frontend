@@ -77,7 +77,7 @@ const closeModal = () => {
       <div
         class="flex justify-between items-center border-b border-gray-200 pb-2"
       >
-        <h2 class="text-lg font-bold">
+        <h2 class="text-lg semibold">
           {{ props.product?.id ? "Rediger" : "Opret" }} Produkt
         </h2>
         <button
@@ -85,7 +85,7 @@ const closeModal = () => {
           class="text-gray-400 hover:text-gray-600"
           @click="emit('close')"
         >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 14 14">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 14 14">
             <path
               stroke="currentColor"
               stroke-linecap="round"
@@ -148,7 +148,7 @@ const closeModal = () => {
           <div class="flex gap-2 ml-auto">
             <button
               @click="closeModal()"
-              class="bg-gray-200 text-gray-700 px-4 py-2 rounded"
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition duration-200"
             >
               Annuller
             </button>
@@ -157,7 +157,7 @@ const closeModal = () => {
               :disabled="!isFormValid"
               :class="
                 isFormValid
-                  ? 'bg-green-600 text-white px-4 py-2 rounded'
+                  ? 'bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200'
                   : 'bg-green-200 text-white px-4 py-2 rounded cursor-not-allowed'
               "
             >
