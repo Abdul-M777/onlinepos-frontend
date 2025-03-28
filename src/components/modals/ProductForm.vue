@@ -43,6 +43,10 @@ const isFormValid = computed(() => {
   );
 });
 
+const hasChanges = computed(() => {
+  return JSON.stringify(product.value) !== JSON.stringify(props.product);
+});
+
 const isVisible = ref(true);
 
 const modalRef = ref(null);
@@ -155,9 +159,9 @@ const handleSave = async () => {
             </button>
             <button
               @click="handleSave()"
-              :disabled="!isFormValid"
+              :disabled="!isFormValid || !hasChanges"
               :class="
-                isFormValid
+                isFormValid && hasChanges
                   ? 'bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200 cursor-pointer'
                   : 'bg-green-200 text-white px-4 py-2 rounded cursor-not-allowed'
               "
