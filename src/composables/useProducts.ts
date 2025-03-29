@@ -6,7 +6,6 @@ const API_URL = "http://localhost:8000/api/products";
 
 export function useProducts() {
   const products = ref<Product[]>([]);
-  // const product = ref<Product | null>(null); // Product to be edited
   const product = ref<Product>({
     id: 0,
     name: "",
