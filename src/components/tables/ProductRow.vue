@@ -17,31 +17,31 @@ const emit = defineEmits(["edit"]);
     </td>
 
     <td class="px-4 py-4 font-medium text-gray-900 hidden sm:table-cell">
-      {{ product.id }}
+      {{ props.product.id }}
     </td>
-    <td class="px-4 py-4">{{ product.name }}</td>
+    <td class="px-4 py-4">{{ props.product.name }}</td>
     <td class="px-4 py-4 max-w-xs hidden sm:table-cell">
-      {{ product.description }}
+      {{ props.product.description }}
     </td>
     <td class="px-4 py-4 text-right">
-      {{ formatPrice(product.price) }}
+      {{ formatPrice(props.product.price) }}
     </td>
     <td class="px-4 py-4 hidden sm:table-cell">
-      {{ Math.floor(product.vat) }} %
+      {{ Math.floor(props.product.vat) }} %
     </td>
     <td class="px-4 py-4 hidden sm:table-cell">
       <span
         class="px-2 py-1 rounded-full text-xs text-white font-semibold"
         :style="{
           backgroundColor: product.tag_name
-            ? getColor(product.tag_color) || 'transparent'
+            ? getColor(props.product.tag_color) || 'transparent'
             : 'transparent',
           color: product.tag_name
-            ? getDarkerColor(getColor(product.tag_color) || 'transparent')
+            ? getDarkerColor(getColor(props.product.tag_color) || 'transparent')
             : 'transparent',
         }"
       >
-        {{ product.tag_name }}
+        {{ props.product.tag_name }}
       </span>
     </td>
 

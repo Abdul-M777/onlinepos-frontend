@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, ref, watch } from "vue";
 import draggable from "vuedraggable";
 import ProductRow from "./ProductRow.vue";
 import type { Product } from "../../types/product";
 
 const props = defineProps<{ products: Product[] }>();
 const emit = defineEmits(["sort", "edit"]);
+
+const localProducts = ref([...props.products]);
+
+watch(
+  () => props.products,
+  (newProducts) => {
+    localProducts.value = [...newProducts];
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -37,8 +47,8 @@ const emit = defineEmits(["sort", "edit"]);
 
         <draggable
           tag="tbody"
-          v-model="props.products"
-          @end="emit('sort')"
+          v-model="localProducts"
+          @end="emit('sort', localProducts)"
           item-key="id"
           handle=".drag-handle"
         >

@@ -165,18 +165,18 @@ const handleDelete = async () => {
           id="tagcolor"
         />
 
-        <div
-          class="flex flex-col sm:flex-row justify-between gap-2 mt-3 sm:mt-4"
-        >
-          <button
-            v-if="props.product?.id"
-            @click="handleDelete()"
-            class="bg-red-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-600 transition duration-200 text-sm"
-          >
-            Slet
-          </button>
+        <div class="flex sm:flex-row justify-between gap-2 mt-3 sm:mt-4">
+          <div class="flex gap-2 w-fit justify-start mr-auto">
+            <button
+              v-if="props.product?.id"
+              @click="handleDelete()"
+              class="bg-red-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-600 transition duration-200 text-sm"
+            >
+              Slet
+            </button>
+          </div>
 
-          <div class="flex gap-2 ml-auto">
+          <div class="flex gap-2 ml-auto w-fit">
             <button
               @click="closeModal()"
               class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition duration-200 cursor-pointer text-sm"
