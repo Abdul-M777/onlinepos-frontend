@@ -1,6 +1,6 @@
 # Vue.js OnlinePos-frontend
 
-https://abdulmuaz.com/
+Live: https://abdulmuaz.com/
 
 This is a Vue.js project built with TypeScript for managing restaurant takeaway products. It allows owners to create, edit, delete, and organize products using drag-and-drop sorting.
 
