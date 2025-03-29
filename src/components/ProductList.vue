@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import draggable from "vuedraggable";
+import ProductTable from "./tables/ProductTable.vue";
 import ProductForm from "./modals/ProductForm.vue";
-import { getColor, getDarkerColor } from "../utils/colorMap";
-import { formatPrice } from "../utils/format";
 import { useProducts } from "../composables/useProducts";
 
 interface Product {
@@ -22,7 +20,7 @@ const openModal = (product: Product | null = null) => {
   showModal.value = true;
   setTimeout(() => {
     modalRef.value?.focusInput();
-  }, 10); // Wait for DOM
+  }, 10);
 };
 
 onMounted(fetchProducts);
@@ -34,7 +32,7 @@ onMounted(fetchProducts);
     <div class="flex justify-end mb-4">
       <button
         @click="openModal()"
-        class="bg-emerald-500 text-white px-2 py-1 rounded hover:bg-emerald-600 transition duration-200 flex items-center cursor-pointer"
+        class="bg-emerald-500 text-white px-2 py-1 rounded hover:bg-emerald-600 transition"
       >
         <i class="pi pi-plus"></i> <span class="py-1 mx-1">Opret produkt</span>
       </button>
@@ -43,94 +41,12 @@ onMounted(fetchProducts);
     <div class="p-4 text-gray-700 font-semibold bg-white">
       Alle produkter ({{ products.length }})
     </div>
-    <div class="flex flex-col bg-white">
-      <div class="flex-grow">
-        <table class="relative w-full">
-          <thead
-            class="text-xs font-bold uppercase bg-white shadow sticky top-0 z-0"
-          >
-            <tr>
-              <th class="sticky top-0 w-10 px-4 py-3"></th>
-              <th class="sticky top-0 px-4 py-3 text-left hidden sm:table-cell">
-                Produkt ID
-              </th>
-              <th class="sticky top-0 px-4 py-3 text-left">Navn</th>
-              <th class="sticky top-0 px-4 py-3 text-left hidden sm:table-cell">
-                Beskrivelse
-              </th>
-              <th class="sticky top-0 px-4 py-3 text-left">Pris</th>
-              <th class="sticky top-0 px-4 py-3 text-left hidden sm:table-cell">
-                Momstats
-              </th>
-              <th class="sticky top-0 px-4 py-3 text-left hidden sm:table-cell">
-                Tag
-              </th>
-              <th class="sticky top-0 w-10 px-4 py-3"></th>
-            </tr>
-          </thead>
 
-          <draggable
-            tag="tbody"
-            v-model="products"
-            @end="updateSortOrder"
-            item-key="id"
-          >
-            <template #item="{ element }">
-              <tr
-                class="border-b border-gray-200 odd:bg-gray-50 hover:bg-gray-100 transition"
-              >
-                <!-- Drag handle -->
-                <td class="px-4 py-4 text-gray-500 cursor-move">
-                  <i class="pi pi-align-justify"></i>
-                </td>
-
-                <td
-                  class="px-4 py-4 font-medium text-gray-900 hidden sm:table-cell"
-                >
-                  {{ element.id }}
-                </td>
-                <td class="px-4 py-4">{{ element.name }}</td>
-                <td class="px-4 py-4 max-w-xs hidden sm:table-cell">
-                  {{ element.description }}
-                </td>
-                <td class="px-4 py-4 text-right">
-                  {{ formatPrice(element.price) }}
-                </td>
-                <td class="px-4 py-4 hidden sm:table-cell">
-                  {{ Math.floor(element.vat) }} %
-                </td>
-                <td class="px-4 py-4 hidden sm:table-cell">
-                  <span
-                    class="px-2 py-1 rounded-full text-xs text-white font-semibold"
-                    :style="{
-                      backgroundColor: element.tag_name
-                        ? getColor(element.tag_color) || 'transparent'
-                        : 'transparent',
-                      color: element.tag_name
-                        ? getDarkerColor(
-                            getColor(element.tag_color) || 'transparent'
-                          )
-                        : 'transparent',
-                    }"
-                  >
-                    {{ element.tag_name }}
-                  </span>
-                </td>
-
-                <td class="px-4 py-4 text-right">
-                  <button
-                    @click="openModal(element)"
-                    class=":hover:bg-gray-200 cursor-pointer"
-                  >
-                    <i class="pi pi-angle-right"></i>
-                  </button>
-                </td>
-              </tr>
-            </template>
-          </draggable>
-        </table>
-      </div>
-    </div>
+    <ProductTable
+      :products="products"
+      @sort="updateSortOrder"
+      @edit="openModal"
+    />
 
     <ProductForm
       v-if="showModal"
