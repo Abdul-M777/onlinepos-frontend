@@ -2,16 +2,7 @@
 import { defineProps, defineEmits } from "vue";
 import { formatPrice } from "../../utils/format";
 import { getColor, getDarkerColor } from "../../utils/colorMap";
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  vat: number;
-  tag_name?: string;
-  tag_color?: string;
-}
+import type { Product } from "../../types/product";
 
 const props = defineProps<{ product: Product }>();
 const emit = defineEmits(["edit"]);

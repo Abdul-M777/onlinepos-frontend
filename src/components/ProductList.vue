@@ -3,12 +3,7 @@ import { ref, onMounted } from "vue";
 import ProductTable from "./tables/ProductTable.vue";
 import ProductForm from "./modals/ProductForm.vue";
 import { useProducts } from "../composables/useProducts";
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
+import type { Product } from "../types/product";
 
 const showModal = ref<boolean>(false);
 const selectedProduct = ref<Product | null>(null);

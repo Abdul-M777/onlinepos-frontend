@@ -2,16 +2,7 @@
 import { defineProps, defineEmits } from "vue";
 import draggable from "vuedraggable";
 import ProductRow from "./ProductRow.vue";
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  vat: number;
-  tag_name?: string;
-  tag_color?: string;
-}
+import type { Product } from "../../types/product";
 
 const props = defineProps<{ products: Product[] }>();
 const emit = defineEmits(["sort", "edit"]);
