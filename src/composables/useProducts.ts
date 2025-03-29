@@ -21,14 +21,14 @@ export function useProducts() {
     try {
       const response = await axios.get<Product[]>(API_URL);
       products.value = response.data;
-      console.log("Fetched products:", products.value);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
 
-  const updateSortOrder = async () => {
+  const updateSortOrder = async (sortedProducts: Product[]) => {
     try {
+      products.value = [...sortedProducts];
       await axios.post(`${API_URL}/sort`, { products: products.value });
     } catch (error) {
       console.error("Error updating sort order:", error);
@@ -48,9 +48,7 @@ export function useProducts() {
   // Save or update a product
   const saveProduct = async () => {
     try {
-      console.log(product.value);
       if (product.value?.id) {
-        // If product has an ID, update the existing product
         await axios.put(`${API_URL}/${product.value.id}`, product.value);
       } else {
         // If no ID, create a new product
