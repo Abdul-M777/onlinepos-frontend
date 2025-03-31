@@ -8,9 +8,9 @@ This is a Vue.js project built with TypeScript for managing restaurant takeaway 
 
 Ensure you have the following installed on your system:
 
-- [Node.js](https://nodejs.org/) (LTS version recommended)
+- [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-- [Vue CLI](https://cli.vuejs.org/) (if needed)
+- [Vue CLI](https://cli.vuejs.org/)
 
 ## Installation
 
